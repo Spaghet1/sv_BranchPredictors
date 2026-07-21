@@ -1,8 +1,13 @@
 module twoBitBranchPredictor 
-	(
+#(
+	parameter int NUM_BP = 32,
+	parameter int PC_SIZE = 32
+)
+(
 	input logic clk, reset, enable, wasTaken,
+	input logic[PC_SIZE - 1:0] pc,
 	output logic prediction
-	);
+);
 
 	typedef enum logic[1:0] {
 		SNT = 2'b00, 
@@ -11,24 +16,28 @@ module twoBitBranchPredictor
 		ST = 2'b11
 	} state_t;
 
-	state_t state;
+	state_t[NUM_BP] state;
+	logic[$clog2(NUM_BP) - 1:0] index;
 
 	always_ff @(posedge clk) begin
 		if (reset) begin
-			state = WNT;
+			for (int i = 0; i < NUM_BP; i++) begin
+				state[i] <= WNT;
+			end
 		end
 		else if (enable) begin
-			case (state)
-				SNT: state <= wasTaken ? WNT : SNT;
-				WNT: state <= wasTaken ? WT : SNT;
-				WT: state <= wasTaken ? ST : WNT;
-				ST: state <= wasTaken ? ST : WT;
+			case (state[index])
+				SNT: state[index] <= wasTaken ? WNT : SNT;
+				WNT: state[index] <= wasTaken ? WT : SNT;
+				WT: state[index] <= wasTaken ? ST : WNT;
+				ST: state[index] <= wasTaken ? ST : WT;
 			endcase
 		end
 	end
 
 	always_comb begin
-		output = state[1];
+		index = pc % NUM_BP;
+		prediction = state[index][1];
 	end
 endmodule
 
