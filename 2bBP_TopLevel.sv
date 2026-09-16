@@ -16,7 +16,7 @@ module twoBitBranchPredictor
 		ST = 2'b11
 	} state_t;
 
-	state_t[NUM_BP] state;
+	state_t[NUM_BP - 1 : 0] state;
 	logic[$clog2(NUM_BP) - 1:0] index;
 
 	always_ff @(posedge clk) begin
