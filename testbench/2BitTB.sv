@@ -1,20 +1,16 @@
-module bpTestbench;
-	parameter int NUM_BP = 8;
-	parameter int PC_SIZE = 32;
+`include "SaturatedCounter.sv"
+
+module TwoBitTB;
+	parameter int BITS = 2;
 
 	logic clk, reset, enable, wasTaken;
-	logic[PC_SIZE - 1 : 0] pc;
 	logic prediction;
 
-	twoBitBranchPredictor #(
-		.NUM_BP(NUM_BP), 
-		.PC_SIZE(PC_SIZE)
-	) dut (
+	SaturatedCounter #(.BITS(BITS)) dut (
 		.clk(clk),
 		.reset(reset),
 		.enable(enable),
 		.wasTaken(wasTaken),
-		.pc(pc),
 		.prediction(prediction)
 	);
 
@@ -42,9 +38,10 @@ module bpTestbench;
 		reset = 1;
 		enable = 1;
 		wasTaken = 0;
-		pc = 0;
 		
 		run_test(test1);
+		
+		$finish;
 	end
 endmodule
 
