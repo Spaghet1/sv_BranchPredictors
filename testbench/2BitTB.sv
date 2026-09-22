@@ -1,4 +1,4 @@
-`include "SaturatedCounter.sv"
+`include "../rtl/SaturatedCounter.sv"
 
 module TwoBitTB;
 	parameter int BITS = 2;
@@ -30,6 +30,7 @@ module TwoBitTB;
 	endtask
 
 	logic test1[] = '{1,1,1,1,1,1,1,1,1,0}; // for loop	
+	logic test2[] = '{1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}; // alternate
 	
 	always #5ns clk = ~clk;
 
@@ -40,6 +41,7 @@ module TwoBitTB;
 		wasTaken = 0;
 		
 		run_test(test1);
+		run_test(test2);
 		
 		$finish;
 	end

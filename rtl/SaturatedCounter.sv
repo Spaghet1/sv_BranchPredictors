@@ -1,4 +1,4 @@
-module SaturatedCounter #(parameter int BITS = 2)
+module SaturatedCounter #(parameter int BITS = 2) 
 (
 	input logic clk, reset, enable, wasTaken,
 	output logic prediction
