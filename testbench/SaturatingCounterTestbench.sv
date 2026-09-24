@@ -1,6 +1,4 @@
-`include "../rtl/SaturatedCounter.sv"
-
-module TwoBitTB;
+module SaturatingCounterTestbench;
 	parameter int BITS = 2;
 
 	logic clk, reset, enable, wasTaken;
@@ -8,7 +6,7 @@ module TwoBitTB;
 
 	int simState;
 
-	SaturatedCounter #(.BITS(BITS)) dut (
+	SaturatingCounter #(.BITS(BITS)) dut (
 		.clk(clk),
 		.reset(reset),
 		.enable(enable),
