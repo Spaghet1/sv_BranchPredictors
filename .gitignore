@@ -1,7 +1,2 @@
 obj_dir
 test
-*.png
-*.dot
-scripts/DynamoRIO-Linux-11.91.20715
-*a.out
-scripts/*.so
