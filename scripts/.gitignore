@@ -2,3 +2,5 @@ a.out
 *.so
 DynamoRIO*
 ParseRawCbrtrace
+*.dot
+*.png
